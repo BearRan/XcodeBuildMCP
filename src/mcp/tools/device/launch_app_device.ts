@@ -129,6 +129,13 @@ export async function launch_app_deviceLogic(
       ? `✅ App launched successfully\n\n${result.output}\n\nProcess ID: ${processId}\n\nInteract with your app on the device.`
       : `✅ App launched successfully\n\n${result.output}`;
 
+    const nextStepParams = processId
+      ? {
+          stop_app_device: { deviceId, processId },
+          debug_attach_device: { deviceId, pid: processId },
+        }
+      : undefined;
+
     return {
       content: [
         {
@@ -136,7 +143,7 @@ export async function launch_app_deviceLogic(
           text: responseText,
         },
       ],
-      ...(processId ? { nextStepParams: { stop_app_device: { deviceId, processId } } } : {}),
+      ...(nextStepParams ? { nextStepParams } : {}),
     };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);

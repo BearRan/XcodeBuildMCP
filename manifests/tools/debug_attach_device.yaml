@@ -1,0 +1,19 @@
+id: debug_attach_device
+module: mcp/tools/debugging/debug_attach_device
+names:
+  mcp: debug_attach_device
+  cli: attach-device
+description: Attach LLDB to device app.
+routing:
+  stateful: true
+nextSteps:
+  - label: Add a breakpoint
+    toolId: debug_breakpoint_add
+    priority: 1
+  - label: Continue execution
+    toolId: debug_continue
+    priority: 2
+  - label: Show call stack
+    toolId: debug_stack
+    priority: 3
+
