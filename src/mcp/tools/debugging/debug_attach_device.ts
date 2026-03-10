@@ -25,12 +25,9 @@ const baseSchemaObject = z.object({
 
 const debugAttachDeviceSchema = z.preprocess(
   nullifyEmptyStrings,
-  baseSchemaObject.refine(
-    (val) => val.deviceId !== undefined && val.pid !== undefined,
-    {
-      message: 'deviceId and pid are required.',
-    },
-  ),
+  baseSchemaObject.refine((val) => val.deviceId !== undefined && val.pid !== undefined, {
+    message: 'deviceId and pid are required.',
+  }),
 );
 
 export type DebugAttachDeviceParams = z.infer<typeof debugAttachDeviceSchema>;
@@ -115,4 +112,3 @@ export const handler = createTypedToolWithContext<DebugAttachDeviceParams, Debug
   debug_attach_deviceLogic,
   getDefaultDebuggerToolContext,
 );
-
